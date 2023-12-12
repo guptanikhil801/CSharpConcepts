@@ -1,4 +1,6 @@
 ﻿
+using System;
+using System.Linq;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace CsharpConcepts.Classes;
@@ -45,6 +47,33 @@ public class LINQPracticeSet
                      collection.EndsWith(end)
                      select collection;
         return result;
+    }
+
+    /// <summary>
+    /// display the number and frequency of a given number from an array
+    /// </summary>
+    /// <param name="numbers">list of numbers</param>
+    /// <returns>number with frequency</returns>
+    public static Dictionary<int,int> FrequencyOfGivenNumbers(int[] numbers)
+    {
+        Dictionary<int, int> numberWithFrequency = new Dictionary<int, int>();
+        var result = from number in numbers group number by number into y select y;
+        foreach (var group in result)
+        {
+            numberWithFrequency.Add(group.Key, group.Count());
+        }
+        return numberWithFrequency;
+    }
+
+    public static Dictionary<char, int> FrequencyOfEachCharacters(char[] characters)
+    {
+        Dictionary<char, int> charWithFrequency = new Dictionary<char, int>();
+        var result = from singleChar in characters group singleChar by singleChar into data select data;
+        foreach (var group in result)
+        {
+            charWithFrequency.Add(group.Key, group.Count());
+        }
+        return charWithFrequency;
     }
 }
 
