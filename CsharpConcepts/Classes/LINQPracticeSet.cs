@@ -65,15 +65,28 @@ public class LINQPracticeSet
         return numberWithFrequency;
     }
 
-    public static Dictionary<char, int> FrequencyOfEachCharacters(char[] characters)
+    /// <summary>
+    /// display the characters and frequency of each character in a given string
+    /// </summary>
+    /// <param name="word"></param>
+    /// <returns>char with frequency</returns>
+    public static Dictionary<char, int> FrequencyOfEachCharacters(string word)
     {
         Dictionary<char, int> charWithFrequency = new Dictionary<char, int>();
-        var result = from singleChar in characters group singleChar by singleChar into data select data;
+        var result = from singleChar in word group singleChar by singleChar into data select data;
         foreach (var group in result)
         {
             charWithFrequency.Add(group.Key, group.Count());
         }
         return charWithFrequency;
+    }
+
+    public static IEnumerable<dynamic> NumberWithFrequencyAndMultiplication(int[] numbers)
+    {
+        var result = from number in numbers
+                     group number by number into data
+                     select new { Number = data.Key, Frequency = data.Count(), Multiplication = data.Key * data.Count() };
+        return result;
     }
 }
 
