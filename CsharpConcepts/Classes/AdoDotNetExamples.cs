@@ -1,6 +1,6 @@
-﻿using System.Data.SqlClient;
-using CsharpConcepts.Classes.Models;
+﻿using CsharpConcepts.Classes.Models;
 using CsharpConcepts.Interfaces;
+using System.Data.SqlClient;
 
 namespace CsharpConcepts.Classes
 {
@@ -22,7 +22,7 @@ namespace CsharpConcepts.Classes
                 while (reader.Read())
                 {
                     emp.EmployeeId = Convert.ToInt32(reader["EmployeeId"].ToString());
-                    emp.Name = reader["Name"].ToString();
+                    emp.FirstName = reader["Name"].ToString().Split(' ')[0];
                     emp.Salary = Convert.ToInt32(reader["Salary"]);
                 }
                 connection.Close();
@@ -44,7 +44,7 @@ namespace CsharpConcepts.Classes
                 {
                     var employee = new Employee();
                     employee.EmployeeId = Convert.ToInt32(reader["EmployeeId"].ToString());
-                    employee.Name = reader["Name"].ToString();
+                    employee.FirstName = reader["Name"].ToString().Split(' ')[0];
                     employee.Salary = Convert.ToInt32(reader["Salary"].ToString());
                     employees.Add(employee);
                 }
@@ -60,7 +60,7 @@ namespace CsharpConcepts.Classes
                 SqlCommand command = connection.CreateCommand();
                 string sql = "insert into Employee values(@EmpId, '@Name', @Salary);";
                 sql = sql.Replace("@EmpId", employee.EmployeeId.ToString());
-                sql = sql.Replace("@Name", employee.Name);
+                sql = sql.Replace("@Name", employee.FirstName + " " + employee.LastName);
                 sql = sql.Replace("@Salary", employee.Salary.ToString());
                 command.CommandText = sql;
                 connection.Open();
@@ -77,7 +77,7 @@ namespace CsharpConcepts.Classes
                 connection.Open();
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@empId", employee.EmployeeId);
-                command.Parameters.AddWithValue("@name", employee.Name);
+                command.Parameters.AddWithValue("@name", employee.FirstName + " " + employee.LastName);
                 command.Parameters.AddWithValue("@salary", employee.Salary);
                 command.ExecuteNonQuery();
                 connection.Close();
