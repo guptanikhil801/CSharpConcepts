@@ -13,20 +13,19 @@ public class LINQPracticeSet
 
     public static IEnumerable<dynamic> SelectEmployeeIdsAndName(List<Employee> employees)
     {
-        var evenNumbers = employees.Select(x => new { Id = x.EmployeeId, x.Name });
+        var evenNumbers = employees.Select(x => new { Id = x.EmployeeId, x.FirstName });
         return evenNumbers;
     }
-
 
     /// <summary>
     /// find the number of an array and the square of each number using Linq
     /// </summary>
     /// <param name="numbers"></param>
     /// <returns></returns>
-    public static int[] FindNumberAndReturnSquare(int[] numbers)
+    public static IEnumerable<dynamic> FindNumberAndReturnSquare(int[] numbers)
     {
         // var result = from num in numbers let square = num * num select new { num, square };
-        var result = numbers.Select(x => x * x).ToArray();
+        var result = numbers.Select(x => new { number = x, square = x * x });
         return result;
     }
     #endregion
@@ -44,6 +43,52 @@ public class LINQPracticeSet
         var employees = GetMockEmployees();
         var skillsetOfEmployee = employees.Where(x => x.EmployeeId == employeeId).SelectMany(x => x.SkillSet).ToList();
         return skillsetOfEmployee;
+    }
+
+    #endregion
+
+    #region Sorting Operators
+
+    public static List<Employee> GetEmployeeListSortedBySalary()
+    {
+        var allEmployees = GetMockEmployees();
+        var sortedEmployees = allEmployees.OrderBy(x => x.Salary).ToList();
+        return sortedEmployees;
+    }
+
+    public static List<Employee> EmployeesHavingSalaryMoreThan50kSortedBySalary()
+    {
+        var allEmployees = GetMockEmployees();
+        var sortedEmployees = allEmployees.Where(emp => emp.Salary > 50000).OrderBy(x => x.Salary).ToList();
+        return sortedEmployees;
+    }
+
+    public static List<Employee> GetEmployeeListSortedBySalaryDescending()
+    {
+        var allEmployees = GetMockEmployees();
+        var sortedEmployees = allEmployees.OrderByDescending(x => x.Salary).ToList();
+        return sortedEmployees;
+    }
+
+    public static List<Employee> EmployeesHavingSalaryMoreThan50kSortedBySalaryDescending()
+    {
+        var allEmployees = GetMockEmployees();
+        var sortedEmployees = allEmployees.Where(emp => emp.Salary > 50000).OrderByDescending(x => x.Salary).ToList();
+        return sortedEmployees;
+    }
+
+    public static List<Employee> GetEmployeesSortedByFirstNameLastNameThenSalary()
+    {
+        var allEmployees = GetMockEmployees();
+        var sortedEmployees = allEmployees.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ThenBy(x => x.Salary).ToList();
+        return sortedEmployees;
+    }
+
+    public static List<Employee> GetEmployeesSortedByFirstNameLastNameThenSalaryDescending()
+    {
+        var allEmployees = GetMockEmployees();
+        var sortedEmployees = allEmployees.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ThenByDescending(x => x.Salary).ToList();
+        return sortedEmployees;
     }
 
     #endregion
@@ -71,6 +116,22 @@ public class LINQPracticeSet
     public static IEnumerable<string> StringThatStartsAndEndsWithSpecificCharacterMethodSyntax(string[] WordCollection, char start, char end)
     {
         var result = WordCollection.Where(x => x.StartsWith(start) && x.EndsWith(end));
+        return result;
+    }
+    #endregion
+
+    #region OfType Operator
+    public static List<int> GetOnlyIntTypeFromACollection()
+    {
+        var dataSet = new List<object>() { 1, "Nik", 2, "Gupta" };
+        var result = dataSet.OfType<int>().ToList();
+        return result;
+    }
+
+    public static List<string> GetStringTypeHavingLengthMoreThan3()
+    {
+        var dataSet = new List<object>() { 1, "Nik", 2, "Gupta" };
+        var result = dataSet.OfType<string>().Where(data => data.Length > 3).ToList();
         return result;
     }
     #endregion
@@ -160,11 +221,12 @@ public class LINQPracticeSet
         // returning mock data for the Employee class
         return new List<Employee>
         {
-            new Employee { EmployeeId = 1, Name = "John Doe", Salary = 50000, SkillSet = new[] { "C#", "ASP.NET", "SQL", "Spring" } },
-            new Employee { EmployeeId = 2, Name = "Jane Smith", Salary = 60000, SkillSet = new[] { "Java", "Spring", "Hibernate" } },
-            new Employee { EmployeeId = 3, Name = "Bob Johnson", Salary = 55000, SkillSet = new[] { "JavaScript", "React", "Node.js" } },
-            new Employee { EmployeeId = 4, Name = "Alice Williams", Salary = 70000, SkillSet = new[] { "Python", "Django", "MongoDB" } },
-            new Employee { EmployeeId = 5, Name = "Charlie Brown", Salary = 48000, SkillSet = new[] { "HTML", "CSS", "Angular" } }
+            new () { EmployeeId = 1, FirstName = "John", LastName = "Doe", Salary = 50000, SkillSet = new[] { "C#", "ASP.NET", "SQL" } },
+            new () { EmployeeId = 2, FirstName = "Jane", LastName = "Smith", Salary = 60000, SkillSet = new[] { "Java", "Spring", "Hibernate" } },
+            new () { EmployeeId = 3, FirstName = "Bob", LastName = "Johnson", Salary = 55000, SkillSet = new[] { "JavaScript", "React", "Node.js" } },
+            new () { EmployeeId = 4, FirstName = "Alice", LastName = "Williams", Salary = 70000, SkillSet = new[] { "Python", "Django", "MongoDB" } },
+            new () { EmployeeId = 5, FirstName = "John", LastName = "Brown", Salary = 48000, SkillSet = new[] { "HTML", "CSS", "Angular" } },
+            new () { EmployeeId = 6, FirstName = "Alice", LastName = "Williams", Salary = 18000, SkillSet = new[] { "Python", "Django", "MongoDB" } },
         };
     }
     #endregion
