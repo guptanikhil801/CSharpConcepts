@@ -1,15 +1,24 @@
-﻿
-using System;
-using System.Linq;
-using static System.Net.Mime.MediaTypeNames;
+﻿using CsharpConcepts.Classes.Models;
 
 namespace CsharpConcepts.Classes;
 public class LINQPracticeSet
 {
+    public static List<int> SelectOnlyEmployeeIds(List<Employee> employees)
+    {
+        var evenNumbers = employees.Select(x => x.EmployeeId).ToList();
+        return evenNumbers;
+    }
+
+    public static IEnumerable<dynamic> SelectEmployeeIdsAndName(List<Employee> employees)
+    {
+        var evenNumbers = employees.Select(x => new { Id = x.EmployeeId, x.Name });
+        return evenNumbers;
+    }
+
     public static int[] GetEvenNumbers(int[] numbers)
     {
-        // var evenNumbers = numbers.Where(x => x % 2 == 0).ToArray();  Using Method Syntax
-        var evenNumbers = from number in numbers where (number % 2 == 0) select number;  //Using query Syntax
+        //var evenNumbers = from number in numbers where (number % 2 == 0) select number;  //Using query Syntax
+        var evenNumbers = numbers.Where(x => x % 2 == 0).ToArray();
         return evenNumbers.ToArray();
     }
 
@@ -20,10 +29,7 @@ public class LINQPracticeSet
     /// <returns>Integer Array having only even numbers</returns>
     public static int[] GetEvenNumbersInARangeUsingTwoWhere(int[] numbers, int startRange, int endRange)
     {
-        var evenNumbers = from number in numbers
-                          where (number % 2 == 0)
-                          && number >= startRange && number < endRange
-                          select number;  //Using query Syntax
+        var evenNumbers = numbers.Where(x => (x % 2 == 0) && (x >= startRange) && (x <= endRange));
         return evenNumbers.ToArray();
     }
 
@@ -32,9 +38,10 @@ public class LINQPracticeSet
     /// </summary>
     /// <param name="numbers"></param>
     /// <returns></returns>
-    public static IEnumerable<dynamic> FindNumberAndReturnSquare(int[] numbers)
+    public static int[] FindNumberAndReturnSquare(int[] numbers)
     {
-        var result = from num in numbers let square = num * num select new { num, square };
+        // var result = from num in numbers let square = num * num select new { num, square };
+        var result = numbers.Select(x => x * x).ToArray();
         return result;
     }
 
@@ -53,7 +60,7 @@ public class LINQPracticeSet
 
     public static IEnumerable<string> StringThatStartsAndEndsWithSpecificCharacterMethodSyntax(string[] WordCollection, char start, char end)
     {
-        var result = WordCollection.Where( x=> x.StartsWith(start) && x.EndsWith(end));
+        var result = WordCollection.Where(x => x.StartsWith(start) && x.EndsWith(end));
         return result;
     }
 
@@ -92,7 +99,7 @@ public class LINQPracticeSet
     public static Dictionary<char, int> FrequencyOfEachCharactersMethodSyntax(string word)
     {
         Dictionary<char, int> charWithFrequency = new Dictionary<char, int>();
-        var result = word.GroupBy(x => x).ToDictionary( group => group.Key, group => group.Count());
+        var result = word.GroupBy(x => x).ToDictionary(group => group.Key, group => group.Count());
         return result;
     }
 
