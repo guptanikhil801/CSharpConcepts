@@ -91,6 +91,11 @@ public class LINQPracticeSet
         return sortedEmployees;
     }
 
+    public static int[] ShowTopNthRecords(int[] numbers, int count)
+    {
+        return numbers.OrderByDescending(x => x).Distinct().Take(count).ToArray();
+    }
+
     #endregion
 
     #region Where Operator
