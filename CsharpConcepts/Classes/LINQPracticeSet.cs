@@ -163,6 +163,25 @@ public class LINQPracticeSet
     }
     #endregion
 
+    #region Quantifier Operators (All,Any & Contains)
+
+    public static bool CheckAllEmployeesEarnMoreThan40k()
+    {
+        return GetMockEmployees().All(emp => emp.Salary > 15000);
+    }
+
+    public static List<Employee> GetAllEmployeesWhoHasDjangoAsSkill()
+    {
+        return GetMockEmployees().Where(x => x.SkillSet.Any(x => x == "Django")).Select(y => y).ToList();
+    }
+
+    public static bool CheckIfGivenNumberExist()
+    {
+        var numbers = new int[] { 12, 13, 6, 90, 2 };
+        return numbers.Contains(13);
+    }
+    #endregion
+
     #region Query syntax
     /// <summary>
     /// find a string that starts and ends with a specific character.
