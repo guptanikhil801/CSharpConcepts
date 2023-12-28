@@ -182,6 +182,29 @@ public class LINQPracticeSet
     }
     #endregion
 
+    #region Set Operators (Distinct, Except, Intersect, Union)
+    public static List<string> GetDistinctSkills()
+    {
+        return GetMockEmployees().SelectMany(x => x.SkillSet).Distinct().OrderBy(x => x).ToList();
+    }
+
+    public static List<int> GetAllDistinctIDsCombiningEmployeesAndStudents()
+    {
+        return GetMockEmployees().Select(x => x.EmployeeId).Union(GetMockStudents().Select(x => x.StudentId)).ToList();
+    }
+
+    public static List<int> GetCommonIdsCombiningEmployeesAndStudents()
+    {
+        return GetMockEmployees().Select(x => x.EmployeeId).Intersect(GetMockStudents().Select(z => z.StudentId)).ToList();
+    }
+
+    public static List<int> GetUniqueIdsFromEmployeesThatIsNotAvailableInStudents()
+    {
+        return GetMockEmployees().Select(x => x.EmployeeId).Except(GetMockStudents().Select(y => y.StudentId)).ToList();
+    }
+
+    #endregion
+
     #region Query syntax
     /// <summary>
     /// find a string that starts and ends with a specific character.
@@ -239,18 +262,30 @@ public class LINQPracticeSet
     #endregion
 
     #region private methods
-
     private static List<Employee> GetMockEmployees()
     {
         // returning mock data for the Employee class
         return new List<Employee>
         {
-            new () { EmployeeId = 1, FirstName = "John", LastName = "Doe", Salary = 50000, SkillSet = new[] { "C#", "ASP.NET", "SQL" } },
-            new () { EmployeeId = 2, FirstName = "Jane", LastName = "Smith", Salary = 60000, SkillSet = new[] { "Java", "Spring", "Hibernate" } },
-            new () { EmployeeId = 3, FirstName = "Bob", LastName = "Johnson", Salary = 55000, SkillSet = new[] { "JavaScript", "React", "Node.js" } },
-            new () { EmployeeId = 4, FirstName = "Alice", LastName = "Williams", Salary = 70000, SkillSet = new[] { "Python", "Django", "MongoDB" } },
-            new () { EmployeeId = 5, FirstName = "John", LastName = "Brown", Salary = 48000, SkillSet = new[] { "HTML", "CSS", "Angular" } },
-            new () { EmployeeId = 6, FirstName = "Alice", LastName = "Williams", Salary = 18000, SkillSet = new[] { "Python", "Django", "MongoDB" } },
+            new () { EmployeeId = 1, FirstName = "Kai", LastName = "Gray", Salary = 50000, SkillSet = new[] { "C#", "ASP.NET", "SQL" } },
+            new () { EmployeeId = 2, FirstName = "Ava", LastName = "Dean", Salary = 60000, SkillSet = new[] { "Java", "Spring", "Hibernate" } },
+            new () { EmployeeId = 3, FirstName = "Bob", LastName = "Reed", Salary = 55000, SkillSet = new[] { "JavaScript", "React", "Node.js" } },
+            new () { EmployeeId = 4, FirstName = "Max", LastName = "Hale", Salary = 70000, SkillSet = new[] { "Python", "Django", "MongoDB" } },
+            new () { EmployeeId = 5, FirstName = "Leo", LastName = "Ross", Salary = 48000, SkillSet = new[] { "HTML", "CSS", "Angular" } },
+            new () { EmployeeId = 6, FirstName = "Max", LastName = "Hale", Salary = 18000, SkillSet = new[] { "Python", "Django", "MongoDB" } },
+        };
+    }
+
+    private static List<Student> GetMockStudents()
+    {
+        return new List<Student>
+        {
+            new () { StudentId = 1, FirstName = "Tom", LastName = "Gray", Subjects = new [] { "Math", "Science", "Computer Science" } },
+            new () { StudentId = 2, FirstName = "Amy", LastName = "Ryan", Subjects = new [] { "History", "Physics", "Spanish" } },
+            new () { StudentId = 3, FirstName = "Jay", LastName = "Ford", Subjects = new [] { "English", "Biology", "Chemistry" } },
+            new () { StudentId = 4, FirstName = "Eva", LastName = "Hill", Subjects = new [] { "Art", "Music", "Physical Education" } },
+            new () { StudentId = 7, FirstName = "Joe", LastName = "King", Subjects = new [] { "Geography", "Literature", "French" } },
+            new () { StudentId = 8, FirstName = "Sue", LastName = "Dunn", Subjects = new [] { "Economics", "Psychology", "Sociology" } }
         };
     }
     #endregion
