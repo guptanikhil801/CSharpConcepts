@@ -3,7 +3,6 @@
 namespace CsharpConcepts.Classes;
 public class LINQPracticeSet
 {
-
     #region Select Operator
     public static List<int> SelectOnlyEmployeeIds(List<Employee> employees)
     {
@@ -34,14 +33,16 @@ public class LINQPracticeSet
     public static List<string> GetAllSkillsOfAllEmployee()
     {
         var employees = GetMockEmployees();
-        var skillsetOfEmployee = employees.SelectMany(x => x.SkillSet).Distinct().ToList();
+        var skillsetOfEmployee = employees.SelectMany(x => x.SkillSet)
+                                          .Distinct().ToList();
         return skillsetOfEmployee;
     }
 
     public static List<string> GetAllSkillsOfSingleEmployee(int employeeId)
     {
         var employees = GetMockEmployees();
-        var skillsetOfEmployee = employees.Where(x => x.EmployeeId == employeeId).SelectMany(x => x.SkillSet).ToList();
+        var skillsetOfEmployee = employees.Where(x => x.EmployeeId == employeeId)
+                                          .SelectMany(x => x.SkillSet).ToList();
         return skillsetOfEmployee;
     }
 
@@ -59,7 +60,8 @@ public class LINQPracticeSet
     public static List<Employee> EmployeesHavingSalaryMoreThan50kSortedBySalary()
     {
         var allEmployees = GetMockEmployees();
-        var sortedEmployees = allEmployees.Where(emp => emp.Salary > 50000).OrderBy(x => x.Salary).ToList();
+        var sortedEmployees = allEmployees.Where(emp => emp.Salary > 50000)
+                                          .OrderBy(x => x.Salary).ToList();
         return sortedEmployees;
     }
 
@@ -73,21 +75,26 @@ public class LINQPracticeSet
     public static List<Employee> EmployeesHavingSalaryMoreThan50kSortedBySalaryDescending()
     {
         var allEmployees = GetMockEmployees();
-        var sortedEmployees = allEmployees.Where(emp => emp.Salary > 50000).OrderByDescending(x => x.Salary).ToList();
+        var sortedEmployees = allEmployees.Where(emp => emp.Salary > 50000)
+                                          .OrderByDescending(x => x.Salary).ToList();
         return sortedEmployees;
     }
 
     public static List<Employee> GetEmployeesSortedByFirstNameLastNameThenSalary()
     {
         var allEmployees = GetMockEmployees();
-        var sortedEmployees = allEmployees.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ThenBy(x => x.Salary).ToList();
+        var sortedEmployees = allEmployees.OrderBy(x => x.FirstName)
+                                          .ThenBy(x => x.LastName)
+                                          .ThenBy(x => x.Salary).ToList();
         return sortedEmployees;
     }
 
     public static List<Employee> GetEmployeesSortedByFirstNameLastNameThenSalaryDescending()
     {
         var allEmployees = GetMockEmployees();
-        var sortedEmployees = allEmployees.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ThenByDescending(x => x.Salary).ToList();
+        var sortedEmployees = allEmployees.OrderBy(x => x.FirstName)
+                                          .ThenBy(x => x.LastName)
+                                          .ThenByDescending(x => x.Salary).ToList();
         return sortedEmployees;
     }
 
@@ -144,7 +151,6 @@ public class LINQPracticeSet
     #region Group By Operator
     public static Dictionary<char, int> FrequencyOfEachCharactersMethodSyntax(string word)
     {
-        Dictionary<char, int> charWithFrequency = new Dictionary<char, int>();
         var result = word.GroupBy(x => x).ToDictionary(group => group.Key, group => group.Count());
         return result;
     }
@@ -172,7 +178,8 @@ public class LINQPracticeSet
 
     public static List<Employee> GetAllEmployeesWhoHasDjangoAsSkill()
     {
-        return GetMockEmployees().Where(x => x.SkillSet.Any(x => x == "Django")).Select(y => y).ToList();
+        return GetMockEmployees().Where(x => x.SkillSet.Any(x => x == "Django"))
+                                 .Select(y => y).ToList();
     }
 
     public static bool CheckIfGivenNumberExist()
@@ -185,24 +192,49 @@ public class LINQPracticeSet
     #region Set Operators (Distinct, Except, Intersect, Union)
     public static List<string> GetDistinctSkills()
     {
-        return GetMockEmployees().SelectMany(x => x.SkillSet).Distinct().OrderBy(x => x).ToList();
+        return GetMockEmployees().SelectMany(x => x.SkillSet)
+                                 .Distinct()
+                                 .OrderBy(x => x).ToList();
     }
 
     public static List<int> GetAllDistinctIDsCombiningEmployeesAndStudents()
     {
-        return GetMockEmployees().Select(x => x.EmployeeId).Union(GetMockStudents().Select(x => x.StudentId)).ToList();
+        return GetMockEmployees().Select(x => x.EmployeeId)
+                                 .Union(GetMockStudents()
+                                 .Select(x => x.StudentId)).ToList();
     }
 
     public static List<int> GetCommonIdsCombiningEmployeesAndStudents()
     {
-        return GetMockEmployees().Select(x => x.EmployeeId).Intersect(GetMockStudents().Select(z => z.StudentId)).ToList();
+        return GetMockEmployees().Select(x => x.EmployeeId)
+                                 .Intersect(GetMockStudents()
+                                 .Select(z => z.StudentId)).ToList();
     }
 
     public static List<int> GetUniqueIdsFromEmployeesThatIsNotAvailableInStudents()
     {
-        return GetMockEmployees().Select(x => x.EmployeeId).Except(GetMockStudents().Select(y => y.StudentId)).ToList();
+        return GetMockEmployees().Select(x => x.EmployeeId)
+                                 .Except(GetMockStudents()
+                                 .Select(y => y.StudentId)).ToList();
     }
 
+    #endregion
+
+    #region Partioning Operators(Take, TakeWhile, Skip, SkipWhile)
+    public static List<Employee> GetTopTwoEmployee()
+    {
+        return GetMockEmployees().Take(2).ToList();
+    }
+
+    /// <summary>
+    /// Wherever TakeWhile's method gets failed, its stops there, it doesnt check further.
+    /// </summary>
+    /// <returns></returns>
+    public static List<int> GetEmployeesSalaryWhoEarnsAtleast50K()
+    {
+        return GetMockEmployees().TakeWhile(x => x.Salary > 49999)
+                                 .Select(y => y.EmployeeId).ToList();
+    }
     #endregion
 
     #region Query syntax
