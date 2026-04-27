@@ -4,7 +4,7 @@ namespace CsharpConcepts.Classes
     public class HashSetPrograms
     {
         /// <summary>
-        /// will return longest non repitive string length
+        /// returns longest non repitive string length
         /// </summary>
         /// <param name="word"></param>
         /// <returns></returns>
