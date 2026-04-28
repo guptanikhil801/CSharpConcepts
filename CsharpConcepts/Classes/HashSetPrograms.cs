@@ -6,29 +6,25 @@ namespace CsharpConcepts.Classes
         /// <summary>
         /// returns longest non repitive string length
         /// </summary>
-        /// <param name="word"></param>
+        /// <param name="stringToCheck"></param>
         /// <returns></returns>
-        public static int GetLongestSubstringLength(string word)
+        public static int GetLongestSubstringLength(string stringToCheck)
         {
-            int length = 0;
-            HashSet<char> chars = new HashSet<char>();
-            for (int i = 0; i < word.Length - 1; i++)
+            int longestSubstringLength = 0;
+            for (int i = 0; i < stringToCheck.Length - 1; i++)
             {
-                int count = 1;
-                chars.Add(word[i]);
-                for (int j = i + 1; j < word.Length; j++)
+                HashSet<char> chars = new HashSet<char>();
+                for (int j = i; j < stringToCheck.Length; j++)
                 {
-                    if (chars.Add(word[j]))
+                    if (chars.Add(stringToCheck[j]))
                     {
-                        count++;
+                        longestSubstringLength = chars.Count > longestSubstringLength ? chars.Count : longestSubstringLength;
                     }
                     else
-                    {
-                        length = count > length ? count : length;
-                    }
+                        break;
                 }
             }
-            return length;
+            return longestSubstringLength;
         }
 
         /// <summary>
