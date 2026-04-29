@@ -1,4 +1,6 @@
-﻿namespace CsharpConcepts.Classes
+﻿using System.Text.RegularExpressions;
+
+namespace CsharpConcepts.Classes
 {
     public class InterviewPrograms
     {
@@ -18,6 +20,18 @@
         {
             var occurence = word.Count(x => x.Equals(c));
             return occurence;
+        }
+
+        public static List<int> ExtractIntegersFromString(string input)
+        {
+            List<int> numbers = new List<int>();
+
+            foreach (Match match in Regex.Matches(input, @"\d+"))
+            {
+                numbers.Add(int.Parse(match.Value));
+            }
+
+            return numbers;
         }
     }
 }
