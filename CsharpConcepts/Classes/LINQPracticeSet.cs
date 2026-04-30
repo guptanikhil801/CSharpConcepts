@@ -23,7 +23,6 @@ public class LINQPracticeSet
     /// <returns></returns>
     public static IEnumerable<dynamic> FindNumberAndReturnSquare(int[] numbers)
     {
-        // var result = from num in numbers let square = num * num select new { num, square };
         var result = numbers.Select(x => new { number = x, square = x * x });
         return result;
     }
@@ -109,13 +108,12 @@ public class LINQPracticeSet
 
     public static int[] GetEvenNumbers(int[] numbers)
     {
-        //var evenNumbers = from number in numbers where (number % 2 == 0) select number;  //Using query Syntax
         var evenNumbers = numbers.Where(x => x % 2 == 0).ToArray();
         return evenNumbers.ToArray();
     }
 
     /// <summary>
-    /// Write a program in C# Sharp to find the +ve numbers from a list of numbers using two where
+    /// It returns the Even numbers from a list of numbers in a range using two where
     /// conditions in LINQ Query
     /// </summary>
     /// <returns>Integer Array having only even numbers</returns>
@@ -296,7 +294,6 @@ public class LINQPracticeSet
     #region private methods
     private static List<Employee> GetMockEmployees()
     {
-        // returning mock data for the Employee class
         return new List<Employee>
         {
             new () { EmployeeId = 1, FirstName = "Kai", LastName = "Gray", Salary = 50000, SkillSet = new[] { "C#", "ASP.NET", "SQL" } },
