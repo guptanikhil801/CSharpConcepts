@@ -25,9 +25,10 @@ namespace CsharpConcepts.Classes
         {
             return new List<Order>
             {
-                new Order { CustomerId = 1, OrderDate = new DateTime(2023, 1, 1) },
-                new Order { CustomerId = 1, OrderDate = new DateTime(2023, 5, 1) },
-                new Order { CustomerId = 2, OrderDate = new DateTime(2024, 1, 1) }
+                new Order { CustomerId = 1, OrderDate = new DateTime(2023, 1, 12) },
+                new Order { CustomerId = 1, OrderDate = new DateTime(2023, 5, 22) },
+                new Order { CustomerId = 2, OrderDate = new DateTime(2024, 1, 5) },
+                new Order { CustomerId = 2, OrderDate = new DateTime(2024, 1, 3) }
             };
         }
 

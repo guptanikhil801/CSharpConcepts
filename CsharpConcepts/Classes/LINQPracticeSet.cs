@@ -29,12 +29,12 @@ public class LINQPracticeSet
     #endregion
 
     #region Select Many Operator
-    public static List<string> GetAllSkillsOfAllEmployee()
+    public static List<string> GetAllSkillsOfAllEmployes()
     {
         var employees = MockDataProvider.GetMockEmployees();
-        var skillsetOfEmployee = employees.SelectMany(x => x.SkillSet)
+        var skillSetOfEmployees = employees.SelectMany(x => x.SkillSet)
                                           .Distinct().ToList();
-        return skillsetOfEmployee;
+        return skillSetOfEmployees;
     }
 
     public static List<string> GetAllSkillsOfSingleEmployee(int employeeId)
