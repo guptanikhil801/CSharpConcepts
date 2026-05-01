@@ -35,12 +35,13 @@ namespace CsharpConcepts.Classes
         {
             return new List<Employee>
             {
-                new () { EmployeeId = 1, FirstName = "Kai", LastName = "Gray", Salary = 50000, SkillSet = new[] { "C#", "ASP.NET", "SQL" } },
-                new () { EmployeeId = 2, FirstName = "Ava", LastName = "Dean", Salary = 60000, SkillSet = new[] { "Java", "Spring", "Hibernate" } },
-                new () { EmployeeId = 3, FirstName = "Bob", LastName = "Reed", Salary = 55000, SkillSet = new[] { "JavaScript", "React", "Node.js" } },
-                new () { EmployeeId = 4, FirstName = "Max", LastName = "Hale", Salary = 70000, SkillSet = new[] { "Python", "Django", "MongoDB" } },
-                new () { EmployeeId = 5, FirstName = "Leo", LastName = "Ross", Salary = 48000, SkillSet = new[] { "HTML", "CSS", "Angular" } },
-                new () { EmployeeId = 6, FirstName = "Max", LastName = "Hale", Salary = 18000, SkillSet = new[] { "Python", "Django", "MongoDB" } },
+                new Employee { EmployeeId = 1, FirstName = "Amit", LastName = "Sharma", Department = "IT", Role = "Developer", Salary = 60000, SkillSet = new[] { "C#", "SQL", "ASP.NET" } },
+                new Employee { EmployeeId = 2, FirstName = "Priya", LastName = "Singh", Department = "HR", Role = "Manager", Salary = 55000, SkillSet = new[] { "Recruitment", "Communication", "Leadership" } },
+                new Employee { EmployeeId = 3, FirstName = "Rahul", LastName = "Verma", Department = "Finance", Role = "Analyst", Salary = 45000, SkillSet = new[] { "Excel", "Accounting", "Analysis" } },
+                new Employee { EmployeeId = 4, FirstName = "Sneha", LastName = "Patel", Department = "IT", Role = "Tester", Salary = 40000, SkillSet = new[] { "Manual Testing", "Automation", "Selenium" } },
+                new Employee { EmployeeId = 5, FirstName = "Karan", LastName = "Mehta", Department = "Support", Role = "Executive", Salary = 30000, SkillSet = new[] { "Customer Support", "Communication", "Problem Solving" } },
+                new Employee { EmployeeId = 6, FirstName = "Viki", LastName = "Joshi", Department = "IT", Role = "Developer", Salary = 65000, SkillSet = new[] { "Java", "Spring Boot", "Microservices" } },
+                new Employee { EmployeeId = 7, FirstName = "Neha", LastName = "Gupta", Department = "IT", Role = "Tester", Salary = 42000, SkillSet = new[] { "Selenium", "API Testing", "Postman" } }
             };
         }
     }
