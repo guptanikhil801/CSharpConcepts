@@ -13,51 +13,11 @@ namespace CsharpConcepts.Classes
         {
             return new List<Student>
             {
-                new Student
-                {
-                    StudentId = 1,
-                    FirstName = "Amit",
-                    LastName = "Sharma",
-                    Class = 10,
-                    Percentage = 91.5,
-                    Subjects = new[] { "Math", "Science", "English" }
-                },
-                new Student
-                {
-                    StudentId = 2,
-                    FirstName = "Priya",
-                    LastName = "Singh",
-                    Class = 10,
-                    Percentage = 88.2,
-                    Subjects = new[] { "History", "English", "Geography" }
-                },
-                new Student
-                {
-                    StudentId = 3,
-                    FirstName = "Rahul",
-                    LastName = "Verma",
-                    Class = 9,
-                    Percentage = 84.7,
-                    Subjects = new[] { "Physics", "Chemistry", "Math" }
-                },
-                new Student
-                {
-                    StudentId = 4,
-                    FirstName = "Sneha",
-                    LastName = "Patel",
-                    Class = 9,
-                    Percentage = 89.9,
-                    Subjects = new[] { "Biology", "Chemistry", "English" }
-                },
-                new Student
-                {
-                    StudentId = 5,
-                    FirstName = "Karan",
-                    LastName = "Mehta",
-                    Class = 10,
-                    Percentage = 93.3,
-                    Subjects = new[] { "Computer", "Math", "Physics" }
-                }
+                new Student { StudentId = 1, FirstName = "Amit", LastName = "Sharma", Class = 10, Percentage = 91.5, Subjects = ["Math", "Science", "English"] },
+                new Student { StudentId = 2, FirstName = "Priya", LastName = "Singh", Class = 10, Percentage = 88.2, Subjects = ["History", "English", "Geography"] },
+                new Student { StudentId = 3, FirstName = "Rahul", LastName = "Verma", Class = 9,  Percentage = 84.7, Subjects = ["Physics", "Chemistry", "Math"] },
+                new Student { StudentId = 4, FirstName = "Sneha", LastName = "Patel", Class = 9,  Percentage = 89.9, Subjects = ["Biology", "Chemistry", "English"] },
+                new Student { StudentId = 5, FirstName = "Karan", LastName = "Mehta", Class = 10, Percentage = 93.3, Subjects = ["Computer", "Math", "Physics"] }
             };
         }
 
