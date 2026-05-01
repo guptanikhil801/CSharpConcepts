@@ -5,6 +5,9 @@
         public int StudentId { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+        public int Class { get; set; }
+        public double  Percentage { get; set; }
         public string[]? Subjects { get; set; }
     }
+
 }

@@ -31,7 +31,7 @@ public class LINQPracticeSet
     #region Select Many Operator
     public static List<string> GetAllSkillsOfAllEmployee()
     {
-        var employees = GetMockEmployees();
+        var employees = MockDataProvider.GetMockEmployees();
         var skillsetOfEmployee = employees.SelectMany(x => x.SkillSet)
                                           .Distinct().ToList();
         return skillsetOfEmployee;
@@ -39,7 +39,7 @@ public class LINQPracticeSet
 
     public static List<string> GetAllSkillsOfSingleEmployee(int employeeId)
     {
-        var employees = GetMockEmployees();
+        var employees = MockDataProvider.GetMockEmployees();
         var skillsetOfEmployee = employees.Where(x => x.EmployeeId == employeeId)
                                           .SelectMany(x => x.SkillSet).ToList();
         return skillsetOfEmployee;
@@ -51,14 +51,14 @@ public class LINQPracticeSet
 
     public static List<Employee> GetEmployeeListSortedBySalary()
     {
-        var allEmployees = GetMockEmployees();
+        var allEmployees = MockDataProvider.GetMockEmployees();
         var sortedEmployees = allEmployees.OrderBy(x => x.Salary).ToList();
         return sortedEmployees;
     }
 
     public static List<Employee> EmployeesHavingSalaryMoreThan50kSortedBySalary()
     {
-        var allEmployees = GetMockEmployees();
+        var allEmployees = MockDataProvider.GetMockEmployees();
         var sortedEmployees = allEmployees.Where(emp => emp.Salary > 50000)
                                           .OrderBy(x => x.Salary).ToList();
         return sortedEmployees;
@@ -66,14 +66,14 @@ public class LINQPracticeSet
 
     public static List<Employee> GetEmployeeListSortedBySalaryDescending()
     {
-        var allEmployees = GetMockEmployees();
+        var allEmployees = MockDataProvider.GetMockEmployees();
         var sortedEmployees = allEmployees.OrderByDescending(x => x.Salary).ToList();
         return sortedEmployees;
     }
 
     public static List<Employee> EmployeesHavingSalaryMoreThan50kSortedBySalaryDescending()
     {
-        var allEmployees = GetMockEmployees();
+        var allEmployees = MockDataProvider.GetMockEmployees();
         var sortedEmployees = allEmployees.Where(emp => emp.Salary > 50000)
                                           .OrderByDescending(x => x.Salary).ToList();
         return sortedEmployees;
@@ -81,7 +81,7 @@ public class LINQPracticeSet
 
     public static List<Employee> GetEmployeesSortedByFirstNameLastNameThenSalary()
     {
-        var allEmployees = GetMockEmployees();
+        var allEmployees = MockDataProvider.GetMockEmployees();
         var sortedEmployees = allEmployees.OrderBy(x => x.FirstName)
                                           .ThenBy(x => x.LastName)
                                           .ThenBy(x => x.Salary).ToList();
@@ -90,7 +90,7 @@ public class LINQPracticeSet
 
     public static List<Employee> GetEmployeesSortedByFirstNameLastNameThenSalaryDescending()
     {
-        var allEmployees = GetMockEmployees();
+        var allEmployees = MockDataProvider.GetMockEmployees();
         var sortedEmployees = allEmployees.OrderBy(x => x.FirstName)
                                           .ThenBy(x => x.LastName)
                                           .ThenByDescending(x => x.Salary).ToList();
@@ -165,18 +165,30 @@ public class LINQPracticeSet
             }); ;
         return result;
     }
+
+    public static Dictionary<int, List<Student>> GroupAndSortStudents()
+    {
+        return MockDataProvider.GetMockStudents().GroupBy(x => x.Class)
+             .ToDictionary(x => x.Key, y => y.OrderByDescending(s => s.Percentage).ToList());
+    }
+
+    public static Dictionary<(int CustomerId, int Year), List<Order>> GroupOrdersByCustomerAndYear()
+    {
+        return MockDataProvider.GetMockOrders().GroupBy(x => (x.CustomerId, x.OrderDate.Year))
+              .ToDictionary(x => x.Key, y => y.ToList());
+    }
     #endregion
 
     #region Quantifier Operators (All,Any & Contains)
 
     public static bool CheckAllEmployeesEarnMoreThan40k()
     {
-        return GetMockEmployees().All(emp => emp.Salary > 15000);
+        return MockDataProvider.GetMockEmployees().All(emp => emp.Salary > 15000);
     }
 
     public static List<Employee> GetAllEmployeesWhoHasDjangoAsSkill()
     {
-        return GetMockEmployees().Where(x => x.SkillSet.Any(x => x == "Django"))
+        return MockDataProvider.GetMockEmployees().Where(x => x.SkillSet.Any(x => x == "Django"))
                                  .Select(y => y).ToList();
     }
 
@@ -190,29 +202,29 @@ public class LINQPracticeSet
     #region Set Operators (Distinct, Except, Intersect, Union)
     public static List<string> GetDistinctSkills()
     {
-        return GetMockEmployees().SelectMany(x => x.SkillSet)
+        return MockDataProvider.GetMockEmployees().SelectMany(x => x.SkillSet)
                                  .Distinct()
                                  .OrderBy(x => x).ToList();
     }
 
     public static List<int> GetAllDistinctIDsCombiningEmployeesAndStudents()
     {
-        return GetMockEmployees().Select(x => x.EmployeeId)
-                                 .Union(GetMockStudents()
+        return MockDataProvider.GetMockEmployees().Select(x => x.EmployeeId)
+                                 .Union(MockDataProvider.GetMockStudents()
                                  .Select(x => x.StudentId)).ToList();
     }
 
     public static List<int> GetCommonIdsCombiningEmployeesAndStudents()
     {
-        return GetMockEmployees().Select(x => x.EmployeeId)
-                                 .Intersect(GetMockStudents()
+        return MockDataProvider.GetMockEmployees().Select(x => x.EmployeeId)
+                                 .Intersect(MockDataProvider.GetMockStudents()
                                  .Select(z => z.StudentId)).ToList();
     }
 
     public static List<int> GetUniqueIdsFromEmployeesThatIsNotAvailableInStudents()
     {
-        return GetMockEmployees().Select(x => x.EmployeeId)
-                                 .Except(GetMockStudents()
+        return MockDataProvider.GetMockEmployees().Select(x => x.EmployeeId)
+                                 .Except(MockDataProvider.GetMockStudents()
                                  .Select(y => y.StudentId)).ToList();
     }
 
@@ -221,7 +233,7 @@ public class LINQPracticeSet
     #region Partioning Operators(Take, TakeWhile, Skip, SkipWhile)
     public static List<Employee> GetTopTwoEmployee()
     {
-        return GetMockEmployees().Take(2).ToList();
+        return MockDataProvider.GetMockEmployees().Take(2).ToList();
     }
 
     /// <summary>
@@ -230,7 +242,7 @@ public class LINQPracticeSet
     /// <returns></returns>
     public static List<int> GetEmployeesSalaryWhoEarnsAtleast50K()
     {
-        return GetMockEmployees().TakeWhile(x => x.Salary > 49999)
+        return MockDataProvider.GetMockEmployees().TakeWhile(x => x.Salary > 49999)
                                  .Select(y => y.EmployeeId).ToList();
     }
     #endregion
@@ -289,34 +301,6 @@ public class LINQPracticeSet
         return result;
     }
 
-    #endregion
-
-    #region private methods
-    private static List<Employee> GetMockEmployees()
-    {
-        return new List<Employee>
-        {
-            new () { EmployeeId = 1, FirstName = "Kai", LastName = "Gray", Salary = 50000, SkillSet = new[] { "C#", "ASP.NET", "SQL" } },
-            new () { EmployeeId = 2, FirstName = "Ava", LastName = "Dean", Salary = 60000, SkillSet = new[] { "Java", "Spring", "Hibernate" } },
-            new () { EmployeeId = 3, FirstName = "Bob", LastName = "Reed", Salary = 55000, SkillSet = new[] { "JavaScript", "React", "Node.js" } },
-            new () { EmployeeId = 4, FirstName = "Max", LastName = "Hale", Salary = 70000, SkillSet = new[] { "Python", "Django", "MongoDB" } },
-            new () { EmployeeId = 5, FirstName = "Leo", LastName = "Ross", Salary = 48000, SkillSet = new[] { "HTML", "CSS", "Angular" } },
-            new () { EmployeeId = 6, FirstName = "Max", LastName = "Hale", Salary = 18000, SkillSet = new[] { "Python", "Django", "MongoDB" } },
-        };
-    }
-
-    private static List<Student> GetMockStudents()
-    {
-        return new List<Student>
-        {
-            new () { StudentId = 1, FirstName = "Tom", LastName = "Gray", Subjects = new [] { "Math", "Science", "Computer Science" } },
-            new () { StudentId = 2, FirstName = "Amy", LastName = "Ryan", Subjects = new [] { "History", "Physics", "Spanish" } },
-            new () { StudentId = 3, FirstName = "Jay", LastName = "Ford", Subjects = new [] { "English", "Biology", "Chemistry" } },
-            new () { StudentId = 4, FirstName = "Eva", LastName = "Hill", Subjects = new [] { "Art", "Music", "Physical Education" } },
-            new () { StudentId = 7, FirstName = "Joe", LastName = "King", Subjects = new [] { "Geography", "Literature", "French" } },
-            new () { StudentId = 8, FirstName = "Sue", LastName = "Dunn", Subjects = new [] { "Economics", "Psychology", "Sociology" } }
-        };
-    }
     #endregion
 
 }
