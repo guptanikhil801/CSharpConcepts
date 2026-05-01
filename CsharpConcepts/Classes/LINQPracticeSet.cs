@@ -166,6 +166,11 @@ public class LINQPracticeSet
         return result;
     }
 
+    public static int MostFrequentNumber(List<int> numbers)
+    {
+        return numbers.GroupBy(x => x).ToDictionary(x => x.Key, y => y.Count()).OrderByDescending(x => x.Value).FirstOrDefault().Key;
+    }
+
     public static Dictionary<int, List<Student>> GroupAndSortStudents()
     {
         return MockDataProvider.GetMockStudents().GroupBy(x => x.Class)
@@ -176,6 +181,15 @@ public class LINQPracticeSet
     {
         return MockDataProvider.GetMockOrders().GroupBy(x => (x.CustomerId, x.OrderDate.Year))
               .ToDictionary(x => x.Key, y => y.ToList());
+    }
+
+    public static Dictionary<string, Dictionary<string, List<Employee>>> NestedGroupingDeptThenRole()
+    {
+        return MockDataProvider.GetMockEmployees().GroupBy(x => x.Department)
+            .ToDictionary(x => x.Key, y => y
+                .GroupBy(x => x.Role)
+                .ToDictionary(x => x.Key, y => y.ToList())
+            );
     }
     #endregion
 
