@@ -1,6 +1,6 @@
 ﻿namespace CsharpConcepts.Classes
 {
-    public static class GenericExample
+    public class GenericExample
     {
         /// <summary>
         ///
@@ -11,7 +11,6 @@
         public static string GetDataType<T>(T arg1)
         {
             var dType = arg1.GetType();
-            // var a = Convert.ChangeType(arg1, dType);
             return dType.Name;
         }
     }

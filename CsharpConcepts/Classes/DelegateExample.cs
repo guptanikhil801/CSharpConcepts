@@ -1,8 +1,13 @@
 ﻿namespace CsharpConcepts.Classes
 {
+    //Delegate should be declared directly inside namespace, it can be declared inside class
+    //but it is advisable to define under namespace since it is a type like class, interface, struct
     public delegate int AddDelegate(int Num1, int Num2); // single cast Delegate
 
-    internal class DelegateExample
+    //Multicast Delegate Return type must be void
+    public delegate void MultiDelegate(int Num1, int Num2);// Multicast delegate
+    
+    internal class ArithmeticOperations
     {
         public int Add(int Num1, int Num2)
         {
@@ -23,12 +28,11 @@
 
     internal class DelegateDriverClass
     {
-        public delegate void MultiDelegate(int Num1, int Num2);              //Multicast Delegate Return type must be void
 
         public void DriverForSingleCastDelegate()
         {
-            DelegateExample delegateExample = new DelegateExample();
-            AddDelegate addDelegate = new AddDelegate(delegateExample.Add);  // initialization of delegate
+            ArithmeticOperations arithmeticOperations = new ArithmeticOperations();
+            AddDelegate addDelegate = new AddDelegate(arithmeticOperations.Add);  // initialization of delegate
             int additionWay1 = addDelegate(56, 4);                           // way-1
             int additionWay2 = addDelegate.Invoke(56, 4);                    // way-2
             Console.WriteLine("Result using Way 1:  " + additionWay1);
@@ -37,9 +41,9 @@
 
         public void DriverForMultiCastDelegate()
         {
-            DelegateExample delegateExample = new DelegateExample();
-            MultiDelegate multiDelegate = new MultiDelegate(delegateExample.Subtract);  // initialization of delegate
-            multiDelegate += delegateExample.Multiply;                                  // Adding another method
+            ArithmeticOperations arithmeticOperations = new ArithmeticOperations();
+            MultiDelegate multiDelegate = new MultiDelegate(arithmeticOperations.Subtract);  // initialization of delegate
+            multiDelegate += arithmeticOperations.Multiply;                                  // Adding another method
             multiDelegate.Invoke(56, 4);                                                // calling delegate
         }
     }
