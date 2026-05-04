@@ -28,11 +28,12 @@
 
     internal class DelegateDriverClass
     {
-
         public void DriverForSingleCastDelegate()
         {
             ArithmeticOperations arithmeticOperations = new ArithmeticOperations();
-            AddDelegate addDelegate = new AddDelegate(arithmeticOperations.Add);  // initialization of delegate
+
+            AddDelegate addDelegate = arithmeticOperations.Add;  // initialization of delegate
+            //AddDelegate addDelegate = new AddDelegate(arithmeticOperations.Add);  // initialization way-2
             int additionWay1 = addDelegate(56, 4);                           // way-1
             int additionWay2 = addDelegate.Invoke(56, 4);                    // way-2
             Console.WriteLine("Result using Way 1:  " + additionWay1);
