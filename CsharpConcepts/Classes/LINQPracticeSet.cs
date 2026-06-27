@@ -168,19 +168,24 @@ public class LINQPracticeSet
 
     public static int MostFrequentNumber(List<int> numbers)
     {
-        return numbers.GroupBy(x => x).ToDictionary(x => x.Key, y => y.Count()).OrderByDescending(x => x.Value).FirstOrDefault().Key;
+        return numbers.GroupBy(x => x)
+            .ToDictionary(x => x.Key, y => y.Count())
+            .OrderByDescending(x => x.Value)
+            .FirstOrDefault().Key;
     }
 
     public static Dictionary<int, List<Student>> GroupAndSortStudents()
     {
-        return MockDataProvider.GetMockStudents().GroupBy(x => x.Class)
-             .ToDictionary(x => x.Key, y => y.OrderByDescending(s => s.Percentage).ToList());
+        return MockDataProvider.GetMockStudents()
+            .GroupBy(x => x.Class)
+            .ToDictionary(x => x.Key, y => y.OrderByDescending(s => s.Percentage).ToList());
     }
 
     public static Dictionary<(int CustomerId, int Year), List<Order>> GroupOrdersByCustomerAndYear()
     {
-        return MockDataProvider.GetMockOrders().GroupBy(x => (x.CustomerId, x.OrderDate.Year))
-              .ToDictionary(x => x.Key, y => y.ToList());
+        return MockDataProvider.GetMockOrders()
+            .GroupBy(x => (x.CustomerId, x.OrderDate.Year))
+            .ToDictionary(x => x.Key, y => y.ToList());
     }
 
     public static Dictionary<string, Dictionary<string, List<Employee>>> NestedGroupingDeptThenRole()
